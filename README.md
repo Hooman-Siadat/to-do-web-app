@@ -92,6 +92,8 @@ todo-app/
 git clone https://github.com/Hooman-Siadat/todo-app.git
 ```
 
+2. open the `index.html` in any browser.
+
 That’s it. no server needed!
 
 ---
