@@ -4,6 +4,20 @@ A responsive, interactive to-do list web application that allows users to add, m
 
 ---
 
+## Table of Contents
+
+- [Tech Stack](#teck-stack)
+- [Features](#features)
+- [Screenshot](#screenshot)
+- [Project Structure](#project-structure)
+- [Feature Improvements](#feature-improvements)
+- [Known Issues](#known-issues)
+- [Changelog](#changelog)
+- [License](#license)
+- [Author](#author)
+
+---
+
 ## 🔧 Tech Stack
 
 - **HTML5** – Markup structure  
@@ -52,11 +66,6 @@ A responsive, interactive to-do list web application that allows users to add, m
 ![Screenshot](assets/screenshot3.png)
 
 ![Screenshot](assets/screenshot4.png)
-
-## 🔧 Tech Stack
-- HTML5
-- CSS3
-- Vanilla JavaScript (ES6+)
 
 ---
 
