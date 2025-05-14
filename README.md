@@ -116,7 +116,12 @@ That’s it. no server needed!
 
 ## 🔄 Changelog
 
+### [v1.0.1] - 2025-05-14
+
+- Added on screen notification messaging system.
+
 ### [v1.0] - 2025-05-13
+
 - Initial release with task creation, completion toggle, and deletion.
 
 ---
