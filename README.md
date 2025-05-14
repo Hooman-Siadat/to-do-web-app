@@ -116,6 +116,13 @@ That’s it. no server needed!
 
 ## 🔄 Changelog
 
+### [v1.0.2] - 2025-05-14
+
+- Fixed notification offset validation logic which allowed the user to select an offset with no time set.
+- Cleaned up some minor debugging codes.
+- Revised the logic so it will return all the upcoming tasks scheduled for the same time.
+- Added a helper function so it will track all the created `setTimeout`s and clears them properly.
+
 ### [v1.0.1] - 2025-05-14
 
 - Added on screen notification messaging system.

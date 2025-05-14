@@ -251,16 +251,20 @@ class TaskManager {
     getNextUpcomingNotification() {
         const activeTasks = this.getTasksByStatus(this.TASK_STATUS.ACTIVE);
 
-        if (activeTasks.length === 0) return null;
+        if (activeTasks.length === 0) return [];
 
         const scheduledTasks = activeTasks.filter((task) => task.notificationTimestamp);
+
+        if (scheduledTasks.length === 0) return [];
 
         // sort scheduled tasks by notification time in ascending order
         scheduledTasks.sort((taskA, taskB) => taskA.notificationTimestamp - taskB.notificationTimestamp);
 
-        const nextScheduledTask = scheduledTasks.length ? scheduledTasks[0] : null;
+        // Get the earliest timestamp
+        const earliestTimestamp = scheduledTasks[0].notificationTimestamp;
 
-        return nextScheduledTask;
+        // Return all tasks with the same earliest timestamp
+        return scheduledTasks.filter((task) => task.notificationTimestamp === earliestTimestamp);
     }
 
     // check for expired tasks and change status to expired
@@ -840,28 +844,38 @@ class DateTimeManager {
 }
 
 class NotificationServices {
-    constructor(taskManager, animationTimeout) {
+    constructor(taskManager, messageBoxTimeout) {
         this.taskManager = taskManager;
         // Message box duration timeout
-        this.timeout = animationTimeout;
+        this.messageBoxTimeout = messageBoxTimeout;
+        this.scheduledTimeouts = [];
     }
     scheduleNotification(renderer) {
-        // get the next upcoming tax with getNotified true
-        const nextTask = this.taskManager.getNextUpcomingNotification();
+        // Clear already set timeouts
+        this.clearScheduledTimeouts();
 
-        if (!nextTask) return null;
+        // get the next upcoming tax with getNotified true
+        const nextTasks = this.taskManager.getNextUpcomingNotification();
+        if (nextTasks.length === 0) return null;
+
         // time difference between now and due date
-        const nextTaskNotificationTime = new Date(nextTask.notificationTimestamp).getTime();
+        const nextTaskNotificationTime = new Date(nextTasks[0].notificationTimestamp).getTime();
         const now = DateTimeManager.getCurrentDateTime().currentTimestamp;
+
         // set timeout to call showBrowserNotification, showOnScreenMessage
-        setTimeout(() => {
-            // TODO you remove console.log
-            console.log(DateTimeManager.getCurrentDateTime().currentTime12Hour);
-            alert(nextTask.content);
-            renderer.showOnScreenMessage(nextTask, this.timeout);
+        const notificationTimeout = setTimeout(() => {
+            nextTasks.forEach((t) => {
+                renderer.showOnScreenMessage(t, this.messageBoxTimeout);
+            });
         }, nextTaskNotificationTime - now);
+
+        // record newly set timeout
+        this.scheduledTimeouts.push(notificationTimeout);
     }
 
+    clearScheduledTimeouts() {
+        this.scheduledTimeouts.forEach((t) => clearTimeout(t));
+    }
     showBrowserNotification() {}
 }
 
@@ -1001,7 +1015,7 @@ class App {
             const isChecked = e.target.checked;
 
             // check if a time is entered
-            if (this.elements.form.timeEntry.disabled) {
+            if (this.elements.form.timeEntry.disabled || this.elements.form.timeEntry.value.trim() === "") {
                 alert("Please select a time first.");
                 this.elements.form.notification.checked = false;
                 return false;
