@@ -6,15 +6,15 @@ A responsive, interactive to-do list web application that allows users to add, m
 
 ## Table of Contents
 
-- [Tech Stack](#teck-stack)
-- [Features](#features)
-- [Screenshot](#screenshot)
-- [Project Structure](#project-structure)
-- [Feature Improvements](#feature-improvements)
-- [Known Issues](#known-issues)
-- [Changelog](#changelog)
-- [License](#license)
-- [Author](#author)
+- [Tech Stack](./README.md#teck-stack)
+- [Features](./README.md#features)
+- [Screenshot](./README.md#screenshot)
+- [Project Structure](./README.md#project-structure)
+- [Feature Improvements](./README.md#feature-improvements)
+- [Known Issues](./README.md#known-issues)
+- [Changelog](./README.md#changelog)
+- [License](./README.md#license)
+- [Author](./README.md#author)
 
 ---
 
