@@ -182,7 +182,7 @@ class TaskManager {
         return true;
     }
 
-    // self explanatory
+    // changes a task status to taskStatus
     changeTaskStatus(taskID, taskStatus) {
         const task = this.getTaskById(taskID);
         const currentDate = DateTimeManager.getCurrentDateTime();
@@ -263,9 +263,9 @@ class TaskManager {
         return nextScheduledTask;
     }
 
-    // check for expired tasks
+    // check for expired tasks and change status to expired
     checkForExpiredTasks() {
-        const activeTasks = this.getTasksByStatus(0);
+        const activeTasks = this.getTasksByStatus(this.TASK_STATUS.ACTIVE);
         const now = DateTimeManager.getCurrentDateTime().currentTimestamp;
 
         activeTasks.forEach((task) => {
@@ -309,13 +309,17 @@ class TaskManager {
 // VIEW
 class Renderer {
     constructor(elements, dynamicElementsClasses, taskManager, notificationServices) {
+        // Elements
         this.elements = elements;
         this.lists = elements.lists;
         this.formFields = elements.form;
-        this.messageBox = elements.messageBox;
+        // Preset class names
         this.classes = dynamicElementsClasses;
+
+        // Helper classes
         this.taskManager = taskManager;
         this.notificationServices = notificationServices;
+        // Enums
         this.TASK_STATUS = taskManager.TASK_STATUS;
         this.TASK_PRIORITY = taskManager.TASK_PRIORITY;
     }
@@ -692,7 +696,72 @@ class Renderer {
         return true;
     }
 
-    createMessageBox() {}
+    createMessageBox(task, timeout, index) {
+        // Staggering effect
+        const animationDelay = index * 300;
+
+        // Message box
+        const messageBox = document.createElement("div");
+        messageBox.classList.add(this.classes.messageBox.className);
+        messageBox.style.animationDelay = `${animationDelay}ms`;
+
+        // Message box content
+        const messageBoxContent = document.createElement("span");
+        messageBoxContent.textContent = `${task.content}`.substring(0, 20).concat(" ...");
+
+        // Close button
+        const closeButton = document.createElement("button");
+        closeButton.textContent = "X";
+
+        closeButton.addEventListener("click", () => {
+            this.taskManager.checkForExpiredTasks();
+            this.renderTasks();
+            messageBox.style.animationDelay = "0ms";
+
+            messageBox.classList.add(this.classes.messageBox.closeAnimation);
+            messageBox.addEventListener("animationend", () => {
+                messageBox.remove();
+            });
+        });
+
+        // Radio button
+        const taskCompleteRadioButton = document.createElement("input");
+        taskCompleteRadioButton.setAttribute("type", "radio");
+        taskCompleteRadioButton.checked = false;
+
+        taskCompleteRadioButton.addEventListener("change", () => {
+            this.taskManager.changeTaskStatus(task.id, this.TASK_STATUS.COMPLETED);
+            messageBox.style.animationDelay = "0ms";
+            // Mark as completed
+            messageBox.classList.add(this.classes.messageBox.completed);
+            this.renderTasks();
+            messageBox.addEventListener("animationend", () => {
+                messageBox.remove();
+            });
+        });
+
+        // Staggered auto-dismiss (FIFO behavior)
+        setTimeout(() => {
+            this.taskManager.checkForExpiredTasks();
+            this.renderTasks();
+            messageBox.remove();
+        }, timeout + animationDelay); // each waits 5s plus its appearance delay
+
+        // Append children
+        messageBox.appendChild(messageBoxContent);
+        messageBox.appendChild(closeButton);
+        messageBox.prepend(taskCompleteRadioButton);
+
+        return messageBox;
+    }
+
+    showOnScreenMessage(task, timeout) {
+        const messageBoxContainer = this.elements.messageBoxContainer;
+        const index = messageBoxContainer.children.length;
+        const messageBox = this.createMessageBox(task, timeout, index);
+
+        messageBoxContainer.prepend(messageBox);
+    }
 }
 
 class DateTimeManager {
@@ -771,8 +840,10 @@ class DateTimeManager {
 }
 
 class NotificationServices {
-    constructor(taskManager) {
+    constructor(taskManager, animationTimeout) {
         this.taskManager = taskManager;
+        // Message box duration timeout
+        this.timeout = animationTimeout;
     }
     scheduleNotification(renderer) {
         // get the next upcoming tax with getNotified true
@@ -787,10 +858,10 @@ class NotificationServices {
             // TODO you remove console.log
             console.log(DateTimeManager.getCurrentDateTime().currentTime12Hour);
             alert(nextTask.content);
-            this.showOnScreenMessage();
+            renderer.showOnScreenMessage(nextTask, this.timeout);
         }, nextTaskNotificationTime - now);
     }
-    showOnScreenMessage() {}
+
     showBrowserNotification() {}
 }
 
@@ -878,10 +949,19 @@ class App {
             animation: {
                 newTask: "new-task",
             },
+            messageBox: {
+                className: "message-box",
+                completed: "marked-completed",
+                closeAnimation: "close-animation",
+            },
         };
 
+        // Message box duration timeout in milliseconds
+        this.messageBoxTimeout = 10000;
+
+        // Helper classes
         this.taskManager = new TaskManager(this.elements.form);
-        this.notificationServices = new NotificationServices(this.taskManager);
+        this.notificationServices = new NotificationServices(this.taskManager, this.messageBoxTimeout);
         this.renderer = new Renderer(
             this.elements,
             dynamicElementsClasses,
@@ -994,10 +1074,7 @@ document.addEventListener("DOMContentLoaded", () => {
             completedList: document.querySelector("#completed-list-tab"),
             expiredList: document.querySelector("#expired-list-tab"),
         },
-        messageBox: {
-            // TODO COMPLETE THIS
-            container: document.querySelector("#on-screen-message-container"),
-        },
+        messageBoxContainer: document.querySelector("#message-box-container"),
     };
 
     // Initiate controller

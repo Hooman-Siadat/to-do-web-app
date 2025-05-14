@@ -455,7 +455,7 @@ button#form-reset:hover {
     background-color: #ffdddd;
 }
 /* -------------------- MESSAGE BOX -------------------- */
-#on-screen-message-container {
+#message-box-container {
     position: fixed;
     bottom: 1rem;
     right: 1rem;
@@ -467,52 +467,78 @@ button#form-reset:hover {
     z-index: 9999;
 }
 
-#on-screen-message > span {
-    flex: 1;
-    margin-right: auto;
+#message-box-container .message-box {
+    display: flex;
+    gap: 0.3rem;
     background: #323232;
     color: white;
-    padding: 1rem;
+    padding: 0.5rem;
     border-radius: 0.4rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
     min-width: 250px;
     max-width: 400px;
-    position: relative;
+    /* position: relative; */
     animation: slideInUp 0.3s ease forwards;
-    opacity: 0; /* Start hidden to allow animation */
+    opacity: 0;
 }
 
-#on-screen-message > button {
+#message-box-container .message-box.marked-completed {
+    background-color: green;
+    animation: markedCompleted 0.5s ease-out forwards;
+    opacity: 1;
+}
+
+#message-box-container .message-box.close-animation {
+    animation: closeAnimation 0.5s ease-out forwards;
+    opacity: 1;
+}
+
+.message-box > span {
+    flex: 1;
+    padding: 1rem;
+}
+
+.message-box > button {
     background: transparent;
     border: none;
     color: white;
     font-size: 1rem;
     cursor: pointer;
-    margin-left: 20px;
+    font-size: 0.5rem;
 }
 
 /* message box animation */
 @keyframes slideInUp {
     0% {
-        background-color: red;
+        background-color: #aaa;
         opacity: 0;
         transform: translateY(20px);
-    }
-    20% {
-        background-color: #323232;
-    }
-    40% {
-        background-color: red;
-    }
-    60% {
-        background-color: #323232;
-    }
-    80% {
-        background-color: red;
     }
     100% {
         opacity: 1;
         transform: translateY(0);
         background-color: #323232;
+    }
+}
+
+@keyframes markedCompleted {
+    from {
+        background-color: green;
+        transform: translateX(0px);
+    }
+    to {
+        background-color: red;
+        transform: translateX(300px);
+        opacity: 0;
+    }
+}
+
+@keyframes closeAnimation {
+    from {
+        transform: translateX(0px);
+    }
+    to {
+        transform: translateX(300px);
+        opacity: 0;
     }
 }
