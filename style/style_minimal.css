@@ -1,0 +1,518 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
+
+/* -------------------- GENERAL -------------------- */
+* {
+    box-sizing: border-box;
+}
+
+.default-theme {
+    --background1: rgb(255, 255, 255);
+    --background2: #ffffe5;
+    --foreground: rgb(221, 221, 221);
+    --primary: rgb(187, 187, 187);
+    --secondary: rgb(51, 51, 51);
+    --active: rgb(30, 144, 255);
+    --completed: rgb(20, 160, 152);
+    --expired: rgb(255, 20, 147);
+    --accent-active: rgba(30, 255, 255, 0.3);
+    --accent-completed: rgba(202, 255, 152, 0.8);
+    --accent-expired: rgb(255, 176, 176);
+    --accent-warning: rgb(255, 165, 0);
+    --accent-error: rgb(255, 0, 0);
+    --muted: #003135;
+
+    --box-shadow1: 1px 1px 5px #1f2937, -2px -2px 2px var(--foreground) inset,
+        2px 2px 2px var(--background1) inset;
+    --box-shadow2: 0px -3px 2px #eeeeee;
+    --box-shadow3: 0px 2px 5px 2px #999999;
+}
+/*
+
+/* TODO create a dark theme */
+
+body {
+    font-family: monospace;
+    font-size: 0.875rem;
+    background-color: #bbccdd;
+    color: #1f2937;
+    padding: 2.5rem 1rem;
+}
+
+/* Visually hidden technique for accessibility */
+.hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: none;
+}
+
+.collapse {
+    height: 0rem;
+    padding: 0rem;
+    overflow: hidden;
+}
+
+ul {
+    list-style: none;
+}
+/* -------------------- MAIN LAYOUT -------------------- */
+.main-container {
+    max-width: 42rem;
+    margin: auto;
+    border: 1px solid #cccccc;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    background-color: #ffffff;
+    padding: 0.5rem;
+    box-shadow: var(--box-shadow1);
+}
+
+.header {
+    display: flex;
+    padding: 0.6rem 1rem;
+    border-radius: 0.375rem;
+    color: #fefce8;
+    background-color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.header #date-display {
+    flex-grow: 1;
+}
+
+.tools {
+    margin-bottom: 1rem;
+}
+
+/* -------------------- FORM -------------------- */
+#task-form ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#task-form .task-bar,
+#task-form .options-bar1,
+#task-form .options-bar2 {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+#task-form .options-bar1 {
+    flex-grow: 1;
+}
+
+#task-form .options-bar1 > * {
+    flex-grow: 1;
+}
+
+#task-form input:not([type="checkbox"]),
+#task-form select {
+    border: 1px solid #9ca3af;
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    max-height: 2rem;
+    min-width: 4rem;
+    color: #1f2937;
+    font-size: 0.8rem;
+    font-family: monospace;
+    text-align: center;
+}
+
+#task-form input:focus,
+#task-form select:focus {
+    outline: none;
+    border-color: #1e90ff;
+    background-color: var(--background1);
+}
+
+#task-form input[disabled] {
+    background-color: #cccccc;
+}
+
+#task-form #task-entry {
+    flex-grow: 1;
+}
+
+#task-form button#add-task-button,
+#task-form button#form-reset {
+    font-family: monospace;
+    font-weight: 900;
+    border: none;
+    border-radius: 0.375rem;
+    min-width: 7rem;
+    cursor: pointer;
+    color: #ffffff;
+    padding: 0.5rem;
+}
+
+#task-form button#add-task-button {
+    background-color: #1e90ff;
+}
+
+#task-form button#form-reset {
+    background-color: #ff4500;
+    margin-left: auto;
+}
+
+button#add-task-button:hover,
+button#form-reset:hover {
+    opacity: 0.8;
+    box-shadow: 0 0 5px #777777;
+}
+
+#task-form .toggle-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+}
+
+.toggle-box {
+    color: #888;
+    cursor: pointer;
+    gap: 0rem;
+}
+.toggle-box::selection {
+    background-color: transparent;
+}
+
+.toggle-box > input {
+    display: none;
+}
+.toggle-box > input + label {
+    vertical-align: bottom;
+    cursor: pointer;
+}
+.toggle-box > input + label > span.material-icons-round {
+    margin-right: 0rem;
+    font-size: 1.2rem;
+}
+.toggle-box > input + label > span:last-child {
+    display: none;
+}
+.toggle-box > input:checked + label > span:last-child {
+    display: inline;
+    color: dodgerblue;
+}
+.toggle-box > input:checked + label > span:first-child {
+    display: none;
+}
+
+.labeled-input.notification-offset-container {
+    display: inline-flex;
+    border: 1px solid #9ca3af;
+    border-radius: 0.375rem;
+    gap: 0rem;
+}
+
+.labeled-input > input#notification-offset {
+    border: none;
+    border-right: 1px solid #9ca3af;
+    border-radius: 0.375rem 0rem 0rem 0.375rem;
+}
+
+.labeled-input > input#notification-offset:focus,
+.labeled-input > input#notification-offset:focus + label {
+    outline: 1px solid dodgerblue;
+}
+
+.labeled-input > label {
+    background-color: #ddd;
+    border-radius: 0rem 0.375rem 0.375rem 0rem;
+    flex: 1;
+    text-align: center;
+}
+.labeled-input > * {
+    padding: 0.5rem;
+}
+
+/* -------------------- LISTS -------------------- */
+.material-icons,
+.material-icons-round {
+    margin-right: 0.4rem;
+    font-size: 1rem;
+}
+
+.lists {
+    display: flex;
+    flex-direction: column;
+}
+
+.lists .list-header {
+    font-size: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.lists .list-header .active {
+    color: #1e90ff;
+}
+
+.lists .list-header .completed {
+    color: #008000;
+}
+
+.lists .list-header .expired {
+    color: #dc143c;
+}
+
+.lists .list-tabs input[type="radio"] {
+    display: none;
+}
+
+.lists .list-tabs .tabs-title li {
+    width: 100%;
+    flex: 1;
+}
+.lists .list-tabs .tabs-title li label {
+    display: flex;
+    border: 1px solid #cccccc;
+    padding: 0.4rem;
+    border-radius: 0.375rem 0.375rem 0rem 0rem;
+    cursor: pointer;
+    justify-content: center;
+    background-color: #dddddd;
+}
+
+.lists .list-tabs .tabs-title li label::selection {
+    background-color: transparent;
+}
+
+.lists ul {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.lists ul.tabs-title {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.lists ul.list {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.lists ul.list#upcoming-list li {
+    display: flex;
+    background-color: #eeeeee;
+    padding: 0.5rem;
+}
+
+.lists ul.list li.placeholder-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #eeeeee;
+}
+
+.lists ul.list#upcoming-list li p {
+    display: inline-flex;
+    align-items: center;
+    flex: 1;
+}
+
+.lists ul.list#upcoming-list li span.task-time-left {
+    background-color: #999999;
+    color: #ffffff;
+    border-radius: 0.375rem;
+    padding: 0.1rem 0.4rem;
+    margin-left: 0.5rem;
+}
+
+.lists ul.list li {
+    border-radius: 0.375rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+    /* Animate box-shadow */
+    border: 1px solid #cccccc;
+}
+
+.lists ul.list li:hover {
+    box-shadow: var(--box-shadow3);
+}
+
+#upcoming-list-tab:checked ~ ul li:nth-child(1) label,
+#active-list-tab:checked ~ ul li:nth-child(2) label,
+#completed-list-tab:checked ~ ul li:nth-child(3) label,
+#expired-list-tab:checked ~ ul li:nth-child(4) label {
+    background: #ffffff;
+    font-weight: bold;
+    box-shadow: var(--box-shadow2);
+    border-bottom: none;
+}
+
+#upcoming-list-tab:checked ~ ul#upcoming-list,
+#active-list-tab:checked ~ ul#active-list,
+#completed-list-tab:checked ~ ul#completed-list,
+#expired-list-tab:checked ~ ul#expired-list {
+    display: flex;
+}
+
+.lists ul div.task-content-container {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    border: 1px solid #eeeeee;
+}
+
+.lists ul div.task-content-container button {
+    padding: 0.1rem;
+    text-align: center;
+    margin-left: 0.3rem;
+    cursor: pointer;
+}
+
+.lists ul div.task-content-container button.task-delete-button {
+    color: red;
+}
+
+.lists ul div.task-content-container p.task-content {
+    flex-grow: 1;
+}
+
+.lists ul div input[type="checkbox"] {
+    margin-right: 1rem;
+}
+
+/* 1. Fade-in on task creation */
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.list li {
+    animation: fadeSlideIn 0.2s ease-out forwards;
+    animation-delay: calc(var(--i, 0) * 60ms);
+    opacity: 0;
+}
+
+/* -------------------- STATUS BAR -------------------- */
+.lists .status-bar {
+    display: flex;
+    padding: 0.3rem 0.5rem;
+    background-color: #1f2937;
+    border: 1px solid #1f2937;
+}
+
+.lists span.task-info {
+    display: inline-flex;
+    align-items: center;
+    background-color: #dddddd;
+    padding: 0.1rem 0.4rem;
+    margin-right: 0.5rem;
+    border-radius: 0.375rem;
+    background-color: #cccccc;
+    cursor: default;
+}
+
+.lists #upcoming-list span.task-info {
+    margin-right: 0rem;
+}
+
+.lists .status-bar .priority-low {
+    background-color: #dddddd;
+}
+
+.lists .status-bar .priority-medium {
+    background-color: #adff2f;
+}
+
+.lists .status-bar .priority-high {
+    background-color: #1e90ff;
+    color: #ffffff;
+}
+
+.lists .status-bar .priority-very-high {
+    background-color: #ff4500;
+    color: #ffffff;
+}
+
+/* -------------------- LIST ITEM COLORS -------------------- */
+.lists #active-list .task-content-container {
+    background-color: #ddffff;
+}
+
+.lists #completed-list .task-content-container {
+    background-color: #ddffdd;
+}
+
+.lists #expired-list .task-content-container {
+    background-color: #ffdddd;
+}
+/* -------------------- MESSAGE BOX -------------------- */
+#on-screen-message-container {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#on-screen-message > span {
+    flex: 1;
+    margin-right: auto;
+    background: #323232;
+    color: white;
+    padding: 1rem;
+    border-radius: 0.4rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-width: 250px;
+    max-width: 400px;
+    position: relative;
+    animation: slideInUp 0.3s ease forwards;
+    opacity: 0; /* Start hidden to allow animation */
+}
+
+#on-screen-message > button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+/* message box animation */
+@keyframes slideInUp {
+    0% {
+        background-color: red;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    20% {
+        background-color: #323232;
+    }
+    40% {
+        background-color: red;
+    }
+    60% {
+        background-color: #323232;
+    }
+    80% {
+        background-color: red;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        background-color: #323232;
+    }
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- CSS reset -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+        <!-- Material icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+        <!-- Main stylesheet -->
+        <link rel="stylesheet" href="./style/style_minimal.css" />
+        <title>ToDo App</title>
+    </head>
+    <body class="default-theme">
+        <div class="main-container">
+            <div class="header">
+                <span id="date-display"></span>
+                <span id="time-display"></span>
+            </div>
+            <div class="tools">
+                <form id="task-form">
+                    <ul>
+                        <li class="task-bar">
+                            <input type="text" id="task-entry" required placeholder="Input new task here" />
+                        </li>
+                        <li class="options-bar1">
+                            <label class="hidden" for="date-entry">Due Date</label>
+                            <input type="date" id="date-entry" />
+                            <div class="toggle-box all-day-container">
+                                <input id="toggle-all-day" type="checkbox" checked />
+                                <label for="toggle-all-day">
+                                    <span class="material-icons-round" title="entire day">schedule</span>
+                                    <span class="material-icons-round" title="entire day">schedule</span>
+                                </label>
+                            </div>
+                            <label class="hidden" for="time-entry">Due Time</label>
+                            <input type="time" id="time-entry" disabled required />
+                            <div class="toggle-box notification-container">
+                                <input id="notification" type="checkbox" />
+                                <label for="notification">
+                                    <span class="material-icons-round">notifications</span>
+                                    <span class="material-icons-round">notifications_active</span>
+                                </label>
+                            </div>
+                            <div class="labeled-input notification-offset-container">
+                                <input
+                                    type="number"
+                                    id="notification-offset"
+                                    min="0"
+                                    max="60"
+                                    step="5"
+                                    value="0"
+                                    disabled
+                                />
+                                <label for="notification-offset">minutes before</label>
+                            </div>
+                        </li>
+                        <li class="options-bar2">
+                            <label class="hidden" for="priority">Priority</label>
+                            <select id="priority">
+                                <option value="3">Very High</option>
+                                <option value="2">High</option>
+                                <option value="1" selected>Medium</option>
+                                <option value="0">Low</option>
+                            </select>
+                            <button id="form-reset" type="reset">Clear</button>
+                            <button type="submit" id="add-task-button">Add Task</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <div class="lists">
+                <div class="list-tabs">
+                    <input type="radio" name="tabs" id="upcoming-list-tab" checked />
+                    <input type="radio" name="tabs" id="active-list-tab" />
+                    <input type="radio" name="tabs" id="completed-list-tab" />
+                    <input type="radio" name="tabs" id="expired-list-tab" />
+                    <ul class="tabs-title">
+                        <li>
+                            <label for="upcoming-list-tab" class="list-header">
+                                <span class="material-icons-round active">pending_actions</span>Upcoming Tasks
+                            </label>
+                        </li>
+                        <li>
+                            <label for="active-list-tab" class="list-header">
+                                <span class="material-icons-round active">format_list_bulleted</span>To Do
+                                List
+                            </label>
+                        </li>
+                        <li>
+                            <label for="completed-list-tab" class="list-header">
+                                <span class="material-icons-round completed">checklist</span>Completed
+                            </label>
+                        </li>
+                        <li>
+                            <label for="expired-list-tab" class="list-header">
+                                <span class="material-icons-round expired">report</span>Expired
+                            </label>
+                        </li>
+                    </ul>
+
+                    <!-- UPCOMING TASKS LIST -->
+                    <ul class="list" id="upcoming-list"></ul>
+
+                    <!-- ACTIVE TASKS LIST -->
+                    <ul class="list" id="active-list"></ul>
+
+                    <!-- COMPLETED TASKS LIST -->
+                    <ul class="list" id="completed-list"></ul>
+
+                    <!-- EXPIRED TASKS LIST -->
+                    <ul class="list" id="expired-list"></ul>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="./js/app.js"></script>
+    <!-- NIGHT OWL BLACK -->
+</html>
