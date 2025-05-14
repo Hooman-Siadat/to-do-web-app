@@ -89,7 +89,7 @@ todo-app/
 
 1. Clone the repo
 ```bash
-git clone https://github.com/yourusername/todo-app.git
+git clone https://github.com/Hooman-Siadat/todo-app.git
 ```
 
 That’s it. no server needed!
@@ -116,12 +116,8 @@ That’s it. no server needed!
 
 ## 🔄 Changelog
 
-### [v1.1] - 2025-05-13
-- Fixed: CSS layout breaking on mobile screens
-- Added: Dark mode toggle
-
-### [v1.0] - 2025-05-10
-- Initial release with task creation, completion toggle, and deletion
+### [v1.0] - 2025-05-13
+- Initial release with task creation, completion toggle, and deletion.
 
 ---
 
