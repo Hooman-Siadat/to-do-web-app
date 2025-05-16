@@ -118,6 +118,15 @@ That’s it. no server needed!
 
 ## 🔄 Changelog
 
+### [v1.0.3] - 2025-05-16
+
+Refactor: Organized codebase into separate modules for better maintainability
+
+- Moved task-related logic to models/Task.js
+- Extracted services (TaskManager, DateTimeManager, NotificationService)
+- Created views/Renderer.js and controllers/App.js
+- Updated main.js as entry point
+
 ### [v1.0.2] - 2025-05-14
 
 - Fixed notification offset validation logic which allowed the user to select an offset with no time set.
