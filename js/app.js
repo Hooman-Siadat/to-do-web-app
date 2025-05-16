@@ -35,8 +35,9 @@ class Task {
 }
 
 class TaskManager {
-    constructor(formFields, storageKey = "userTasks") {
+    constructor(formFields, EXPIRY_DELAY, storageKey = "userTasks") {
         this.formFields = formFields;
+        this.EXPIRY_DELAY = EXPIRY_DELAY;
         this.tasksStorageKey = storageKey;
         this.TASK_STATUS = {
             ACTIVE: 0,
@@ -267,20 +268,26 @@ class TaskManager {
         return scheduledTasks.filter((task) => task.notificationTimestamp === earliestTimestamp);
     }
 
-    // check for expired tasks and change status to expired
+    // check for expired tasks and change status to expired, also returns a list of expired tasks
     checkForExpiredTasks() {
         const activeTasks = this.getTasksByStatus(this.TASK_STATUS.ACTIVE);
         const now = DateTimeManager.getCurrentDateTime().currentTimestamp;
+        const expiredTasks = [];
+
+        // Tasks are considered expired 59 seconds after their due time
+        const EXPIRY_DELAY = 59 * 1000; // 59 seconds in milliseconds
 
         activeTasks.forEach((task) => {
-            let dueDateTimestamp = new Date(`${task.dueDate} ${task.dueTime}`);
-            dueDateTimestamp = dueDateTimestamp.getTime();
+            const dueDateTime = new Date(`${task.dueDate} ${task.dueTime}`).getTime();
 
-            if (dueDateTimestamp < now) {
-                // TODO call notification
+            if (now - dueDateTime >= EXPIRY_DELAY) {
+                // 60 seconds have passed since due time
                 this.changeTaskStatus(task.id, this.TASK_STATUS.EXPIRED);
+                expiredTasks.push(task);
             }
         });
+
+        return expiredTasks;
     }
 
     // save tasksList to localStorage
@@ -700,71 +707,85 @@ class Renderer {
         return true;
     }
 
-    createMessageBox(task, timeout, index) {
-        // Staggering effect
-        const animationDelay = index * 300;
+    showOnScreenMessage(tasks, timeout) {
+        const container = this.elements.messageBoxContainer;
 
-        // Message box
+        // Get current notification IDs
+        const existingIds = new Set(Array.from(container.children).map((el) => el.dataset.notificationId));
+
+        tasks.forEach((task, i) => {
+            if (existingIds.has(task.id)) return; // Skip if already shown
+
+            const index = container.children.length;
+            // used for stacking effect
+            const transitionDelay = index * 300;
+
+            const messageBox = this.createMessageBox(task, transitionDelay);
+            container.prepend(messageBox);
+
+            // Wait a tick to allow rendering before adding the class
+            requestAnimationFrame(() => {
+                messageBox.classList.add(this.classes.messageBox.animateIn);
+            });
+
+            setTimeout(() => {
+                this.taskManager.checkForExpiredTasks();
+                this.removeMessageBox(messageBox);
+
+                if (i === tasks.length - 1) {
+                    this.renderTasks();
+                }
+            }, timeout + transitionDelay);
+        });
+    }
+
+    createMessageBox(task, transitionDelay) {
         const messageBox = document.createElement("div");
         messageBox.classList.add(this.classes.messageBox.className);
-        messageBox.style.animationDelay = `${animationDelay}ms`;
+        // to prevent duplicate notifications
+        messageBox.setAttribute(`data-notification-id`, task.id);
+        messageBox.style.transitionDelay = transitionDelay + "ms";
 
-        // Message box content
-        const messageBoxContent = document.createElement("span");
-        messageBoxContent.textContent = `${task.content}`.substring(0, 20).concat(" ...");
+        const messageContent = document.createElement("span");
+        messageContent.textContent = task.content;
 
-        // Close button
+        const markCompletedInput = document.createElement("input");
+        markCompletedInput.setAttribute("type", "radio");
+        markCompletedInput.checked = false;
+        markCompletedInput.addEventListener("change", () => {
+            this.taskManager.changeTaskStatus(task.id, this.TASK_STATUS.COMPLETED);
+            this.renderTasks();
+            // mark as completed transition delay
+            messageBox.style.transitionDelay = "600ms";
+            messageBox.classList.add(this.classes.messageBox.markCompleted);
+            // wait for marked as complete transition effect
+            messageBox.addEventListener("transitionend", () => {
+                this.removeMessageBox(messageBox);
+            });
+        });
+
         const closeButton = document.createElement("button");
         closeButton.textContent = "X";
-
         closeButton.addEventListener("click", () => {
             this.taskManager.checkForExpiredTasks();
             this.renderTasks();
-            messageBox.style.animationDelay = "0ms";
-
-            messageBox.classList.add(this.classes.messageBox.closeAnimation);
-            messageBox.addEventListener("animationend", () => {
-                messageBox.remove();
-            });
+            messageBox.style.transitionDelay = "600ms";
+            this.removeMessageBox(messageBox);
         });
 
-        // Radio button
-        const taskCompleteRadioButton = document.createElement("input");
-        taskCompleteRadioButton.setAttribute("type", "radio");
-        taskCompleteRadioButton.checked = false;
-
-        taskCompleteRadioButton.addEventListener("change", () => {
-            this.taskManager.changeTaskStatus(task.id, this.TASK_STATUS.COMPLETED);
-            messageBox.style.animationDelay = "0ms";
-            // Mark as completed
-            messageBox.classList.add(this.classes.messageBox.completed);
-            this.renderTasks();
-            messageBox.addEventListener("animationend", () => {
-                messageBox.remove();
-            });
-        });
-
-        // Staggered auto-dismiss (FIFO behavior)
-        setTimeout(() => {
-            this.taskManager.checkForExpiredTasks();
-            this.renderTasks();
-            messageBox.remove();
-        }, timeout + animationDelay); // each waits 5s plus its appearance delay
-
-        // Append children
-        messageBox.appendChild(messageBoxContent);
+        messageBox.appendChild(messageContent);
         messageBox.appendChild(closeButton);
-        messageBox.prepend(taskCompleteRadioButton);
+        messageBox.prepend(markCompletedInput);
 
         return messageBox;
     }
 
-    showOnScreenMessage(task, timeout) {
-        const messageBoxContainer = this.elements.messageBoxContainer;
-        const index = messageBoxContainer.children.length;
-        const messageBox = this.createMessageBox(task, timeout, index);
-
-        messageBoxContainer.prepend(messageBox);
+    removeMessageBox(messageBox) {
+        messageBox.classList.remove(this.classes.messageBox.animateIn);
+        messageBox.classList.add(this.classes.messageBox.animateOut);
+        messageBox.addEventListener("transitionend", () => {
+            messageBox.remove();
+        });
     }
 }
 
@@ -850,6 +871,7 @@ class NotificationServices {
         this.messageBoxTimeout = messageBoxTimeout;
         this.scheduledTimeouts = [];
     }
+
     scheduleNotification(renderer) {
         // Clear already set timeouts
         this.clearScheduledTimeouts();
@@ -861,21 +883,21 @@ class NotificationServices {
         // time difference between now and due date
         const nextTaskNotificationTime = new Date(nextTasks[0].notificationTimestamp).getTime();
         const now = DateTimeManager.getCurrentDateTime().currentTimestamp;
+        const timeDifference = nextTaskNotificationTime - now;
 
-        // set timeout to call showBrowserNotification, showOnScreenMessage
-        const notificationTimeout = setTimeout(() => {
-            nextTasks.forEach((t) => {
-                renderer.showOnScreenMessage(t, this.messageBoxTimeout);
-            });
-        }, nextTaskNotificationTime - now);
+        const newTimeout = setTimeout(() => {
+            renderer.showOnScreenMessage(nextTasks, this.messageBoxTimeout);
+        }, timeDifference);
 
         // record newly set timeout
-        this.scheduledTimeouts.push(notificationTimeout);
+        this.scheduledTimeouts.push(newTimeout);
     }
 
     clearScheduledTimeouts() {
         this.scheduledTimeouts.forEach((t) => clearTimeout(t));
+        this.scheduledTimeouts = [];
     }
+
     showBrowserNotification() {}
 }
 
@@ -965,17 +987,20 @@ class App {
             },
             messageBox: {
                 className: "message-box",
-                completed: "marked-completed",
-                closeAnimation: "close-animation",
+                markCompleted: "marked-completed",
+                animateIn: "entry-animation",
+                animateOut: "close-animation",
             },
         };
 
-        // Message box duration timeout in milliseconds
-        this.messageBoxTimeout = 10000;
+        // Tasks are considered expired 59 seconds after their due time
+        // Used as notification box duration timeout in milliseconds
+        // Also passed to TaskManager.checkForExpiredTasks
+        this.EXPIRY_DELAY = 59 * 1000;
 
         // Helper classes
-        this.taskManager = new TaskManager(this.elements.form);
-        this.notificationServices = new NotificationServices(this.taskManager, this.messageBoxTimeout);
+        this.taskManager = new TaskManager(this.elements.form, this.EXPIRY_DELAY);
+        this.notificationServices = new NotificationServices(this.taskManager, this.EXPIRY_DELAY);
         this.renderer = new Renderer(
             this.elements,
             dynamicElementsClasses,
