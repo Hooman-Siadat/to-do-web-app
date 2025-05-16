@@ -263,7 +263,7 @@ button#form-reset:hover {
     color: #dc143c;
 }
 
-.lists .list-tabs input[type="radio"] {
+.lists .list-tabs input[type="radio"][name="tabs"] {
     display: none;
 }
 
@@ -379,7 +379,7 @@ button#form-reset:hover {
     flex-grow: 1;
 }
 
-.lists ul div input[type="checkbox"] {
+.lists ul div input[type="radio"] {
     margin-right: 1rem;
 }
 
