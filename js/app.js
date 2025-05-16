@@ -767,7 +767,8 @@ class Renderer {
         const closeButton = document.createElement("button");
         closeButton.textContent = "X";
         closeButton.addEventListener("click", () => {
-            this.taskManager.checkForExpiredTasks();
+            // changeStatus to expired
+            // this.taskManager.checkForExpiredTasks();
             this.renderTasks();
             messageBox.style.transitionDelay = "600ms";
             this.removeMessageBox(messageBox);
