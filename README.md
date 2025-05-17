@@ -73,14 +73,34 @@ A responsive, interactive to-do list web application that allows users to add, m
 
 ```
 todo-app/
-├── index.html
-├── css/
-│   └── style.css
-├── js/
-│   └── script.js
-├── assets/
-│   └── screenshot.png
-└── README.md
+├── assets/                		# Contains static assets like images, icons, etc.
+├── js/                    		# Core application JavaScript files
+│   ├── controller/        		# Handles application logic and user interactions
+│   │   └── App.js          	# Main application controller
+│   ├── models/             	# Defines data structures and business logic
+│   │   └── Task.js         	# Represents a single to-do task
+│   ├── services/           	# Provides reusable functionalities and utilities
+│   │   ├── DateTimeManager.js  # Manages date and time related operations
+│   │   ├── NotificationServices.js # Handles in-app notifications
+│   │   └── TaskManager.js  	# Manages the collection of tasks (add, delete, update)
+│   └── views/              	# Responsible for rendering the UI
+│       ├── Renderer.js     	# Manages rendering updates to the DOM
+│       └── main.js         	# Entry point for initializing the application
+├── style/                  	# Contains all CSS files for styling the application
+│   ├── base.css            	# Base styles, resets, and typography
+│   ├── form.css            	# Styles for form elements
+│   ├── layout.css          	# Defines the overall page layout
+│   ├── lists.css           	# Styles for list elements (e.g., task list)
+│   ├── main.css            	# Main application-wide styles
+│   ├── notifications.css   	# Styles for notification messages
+│   ├── status-bar.css      	# Styles for any status bar elements
+│   ├── style_minimal.css   	# Potentially a minimal or alternative style theme
+│   ├── task.css            	# Specific styles for individual task items
+│   └── themes.css          	# Defines different themes or color schemes
+├── .gitignore              	# Specifies intentionally untracked files to ignore
+├── index.html              	# The main HTML file where the React app is mounted
+├── LICENSE                 	# License file for the project
+└── README.md               	# This README file
 ```
 
 ---
