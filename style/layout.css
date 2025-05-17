@@ -1,0 +1,49 @@
+/* -------------------- MAIN LAYOUT -------------------- */
+
+.main-container {
+    max-width: 42rem;
+    margin: auto;
+    border: 1px solid #cccccc;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    background-color: #ffffff;
+    padding: 0.5rem;
+    box-shadow: var(--box-shadow1);
+}
+
+.header {
+    display: flex;
+    padding: 0.6rem 1rem;
+    border-radius: 0.375rem;
+    color: #fefce8;
+    background-color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.header #date-display {
+    flex-grow: 1;
+}
+
+.tools {
+    margin-bottom: 1rem;
+}
+
+.lists {
+    display: flex;
+    flex-direction: column;
+}
+
+.lists .list-header {
+    font-size: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+/* -------------------- STATUS BAR -------------------- */
+
+.lists .status-bar {
+    display: flex;
+    padding: 0.3rem 0.5rem;
+    background-color: #1f2937;
+    border: 1px solid #1f2937;
+}

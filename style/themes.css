@@ -1,0 +1,23 @@
+/* -------------------- THEMES / VARIABLES -------------------- */
+
+.default-theme {
+    --background1: rgb(255, 255, 255);
+    --background2: #ffffe5;
+    --foreground: rgb(221, 221, 221);
+    --primary: rgb(187, 187, 187);
+    --secondary: rgb(51, 51, 51);
+    --active: rgb(30, 144, 255);
+    --completed: rgb(20, 160, 152);
+    --expired: rgb(255, 20, 147);
+    --accent-active: rgba(30, 255, 255, 0.3);
+    --accent-completed: rgba(202, 255, 152, 0.8);
+    --accent-expired: rgb(255, 176, 176);
+    --accent-warning: rgb(255, 165, 0);
+    --accent-error: rgb(255, 0, 0);
+    --muted: #003135;
+
+    --box-shadow1: 1px 1px 5px #1f2937, -2px -2px 2px var(--foreground) inset,
+        2px 2px 2px var(--background1) inset;
+    --box-shadow2: 0px -3px 2px #eeeeee;
+    --box-shadow3: 0px 2px 5px 2px #999999;
+}

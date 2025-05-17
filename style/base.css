@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
+
+/* -------------------- BASE / GLOBAL -------------------- */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: monospace;
+    font-size: 0.875rem;
+    background-color: #bbccdd;
+    color: #1f2937;
+    padding: 2.5rem 1rem;
+}
+
+/* Visually hidden technique for accessibility */
+.hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: none;
+}
+
+ul {
+    list-style: none;
+}

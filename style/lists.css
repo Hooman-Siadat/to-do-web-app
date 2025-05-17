@@ -1,0 +1,114 @@
+/* -------------------- LISTS & TABS -------------------- */
+
+.material-icons,
+.material-icons-round {
+    margin-right: 0.4rem;
+    font-size: 1rem;
+}
+
+.lists .list-tabs input[type="radio"][name="tabs"] {
+    display: none;
+}
+
+.lists .list-tabs .tabs-title li {
+    width: 100%;
+    flex: 1;
+}
+
+.lists .list-tabs .tabs-title li label {
+    display: flex;
+    border: 1px solid #cccccc;
+    padding: 0.4rem;
+    border-radius: 0.375rem 0.375rem 0rem 0rem;
+    cursor: pointer;
+    justify-content: center;
+    background-color: #dddddd;
+}
+
+.lists .list-tabs .tabs-title li label::selection {
+    background-color: transparent;
+}
+
+.lists ul {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.lists ul.tabs-title {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.lists ul.list {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#upcoming-list-tab:checked ~ ul li:nth-child(1) label,
+#active-list-tab:checked ~ ul li:nth-child(2) label,
+#completed-list-tab:checked ~ ul li:nth-child(3) label,
+#expired-list-tab:checked ~ ul li:nth-child(4) label {
+    background: #ffffff;
+    font-weight: bold;
+    box-shadow: var(--box-shadow2);
+    border-bottom: none;
+}
+
+#upcoming-list-tab:checked ~ ul#upcoming-list,
+#active-list-tab:checked ~ ul#active-list,
+#completed-list-tab:checked ~ ul#completed-list,
+#expired-list-tab:checked ~ ul#expired-list {
+    display: flex;
+}
+
+.lists ul.list#upcoming-list li,
+.lists ul.list li.placeholder-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #eeeeee;
+}
+
+.lists ul.list#upcoming-list li p {
+    display: inline-flex;
+    align-items: center;
+    flex: 1;
+}
+
+.lists ul.list#upcoming-list li span.task-time-left {
+    background-color: #999999;
+    color: #ffffff;
+    border-radius: 0.375rem;
+    padding: 0.1rem 0.4rem;
+    margin-left: 0.5rem;
+}
+
+.lists ul.list li {
+    border-radius: 0.375rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+    border: 1px solid #cccccc;
+}
+
+.lists ul.list li:hover {
+    box-shadow: var(--box-shadow3);
+}
+
+/* 1. Fade-in on task creation */
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.list li {
+    animation: fadeSlideIn 0.2s ease-out forwards;
+    animation-delay: calc(var(--i, 0) * 60ms);
+    opacity: 0;
+}

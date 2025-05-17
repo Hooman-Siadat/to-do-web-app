@@ -1,0 +1,146 @@
+/* -------------------- FORM -------------------- */
+
+#task-form ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#task-form .task-bar,
+#task-form .options-bar1,
+#task-form .options-bar2 {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+#task-form .options-bar1 {
+    flex-grow: 1;
+}
+
+#task-form .options-bar1 > * {
+    flex-grow: 1;
+}
+
+#task-form input:not([type="checkbox"]),
+#task-form select {
+    border: 1px solid #9ca3af;
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    max-height: 2rem;
+    min-width: 4rem;
+    color: #1f2937;
+    font-size: 0.8rem;
+    font-family: monospace;
+    text-align: center;
+}
+
+#task-form input:focus,
+#task-form select:focus {
+    outline: none;
+    border-color: #1e90ff;
+    background-color: var(--background1);
+}
+
+#task-form input[disabled] {
+    background-color: #cccccc;
+}
+
+#task-form #task-entry {
+    flex-grow: 1;
+}
+
+#task-form button#add-task-button,
+#task-form button#form-reset {
+    font-family: monospace;
+    font-weight: 900;
+    border: none;
+    border-radius: 0.375rem;
+    min-width: 7rem;
+    cursor: pointer;
+    color: #ffffff;
+    padding: 0.5rem;
+}
+
+#task-form button#add-task-button {
+    background-color: #1e90ff;
+}
+
+#task-form button#form-reset {
+    background-color: #ff4500;
+    margin-left: auto;
+}
+
+button#add-task-button:hover,
+button#form-reset:hover {
+    opacity: 0.8;
+    box-shadow: 0 0 5px #777777;
+}
+
+#task-form .toggle-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+}
+
+.toggle-box {
+    color: #888;
+    cursor: pointer;
+    gap: 0rem;
+}
+.toggle-box::selection {
+    background-color: transparent;
+}
+
+.toggle-box > input {
+    display: none;
+}
+.toggle-box > input + label {
+    vertical-align: bottom;
+    cursor: pointer;
+}
+.toggle-box > input + label > span.material-icons-round {
+    margin-right: 0rem;
+    font-size: 1.2rem;
+}
+.toggle-box > input + label > span:last-child {
+    display: none;
+}
+.toggle-box > input:checked + label > span:last-child {
+    display: inline;
+    color: dodgerblue;
+}
+.toggle-box > input:checked + label > span:first-child {
+    display: none;
+}
+
+.labeled-input.notification-offset-container {
+    display: inline-flex;
+    border: 1px solid #9ca3af;
+    border-radius: 0.375rem;
+    gap: 0rem;
+}
+
+.labeled-input > input#notification-offset {
+    border: none;
+    border-right: 1px solid #9ca3af;
+    border-radius: 0.375rem 0rem 0rem 0.375rem;
+}
+
+.labeled-input > input#notification-offset:focus,
+.labeled-input > input#notification-offset:focus + label {
+    outline: 1px solid dodgerblue;
+}
+
+.labeled-input > label {
+    background-color: #ddd;
+    border-radius: 0rem 0.375rem 0.375rem 0rem;
+    flex: 1;
+    text-align: center;
+}
+
+.labeled-input > * {
+    padding: 0.5rem;
+}

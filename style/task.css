@@ -1,0 +1,61 @@
+/* -------------------- TASK ITEMS -------------------- */
+
+.lists ul div.task-content-container {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    border: 1px solid #eeeeee;
+}
+
+.lists ul div.task-content-container p.task-content {
+    flex-grow: 1;
+}
+
+.lists ul div.task-content-container button {
+    padding: 0.1rem;
+    text-align: center;
+    margin-left: 0.3rem;
+    cursor: pointer;
+}
+
+.lists ul div.task-content-container button.task-delete-button {
+    color: red;
+}
+
+.lists ul div input[type="radio"] {
+    margin-right: 1rem;
+}
+
+/* -------------------- LIST ITEM COLORS -------------------- */
+
+.lists #active-list .task-content-container {
+    background-color: #ddffff;
+}
+
+.lists #completed-list .task-content-container {
+    background-color: #ddffdd;
+}
+
+.lists #expired-list .task-content-container {
+    background-color: #ffdddd;
+}
+
+/* -------------------- PRIORITY COLORS -------------------- */
+
+.lists span.task-info.priority-low {
+    background-color: #dddddd;
+}
+
+.lists span.task-info.priority-medium {
+    background-color: #adff2f;
+}
+
+.lists span.task-info.priority-high {
+    background-color: #1e90ff;
+    color: #ffffff;
+}
+
+.lists span.task-info.priority-very-high {
+    background-color: #ff4500;
+    color: #ffffff;
+}

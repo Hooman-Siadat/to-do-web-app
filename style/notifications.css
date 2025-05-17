@@ -1,0 +1,60 @@
+/* -------------------- MESSAGE BOX / NOTIFICATIONS -------------------- */
+
+#message-box-container {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#message-box-container .message-box {
+    position: relative;
+    display: flex;
+    min-width: 250px;
+    max-width: 400px;
+    min-height: 60px;
+    gap: 0.3rem;
+    padding: 0.5rem;
+    background: #323232;
+    color: white;
+    border-radius: 0.4rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    opacity: 0;
+    transform: translateX(300px);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+#message-box-container .message-box.entry-animation {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+#message-box-container .message-box.marked-completed {
+    opacity: 0;
+    transform: translateX(300px);
+    background-color: #449944;
+}
+
+#message-box-container .message-box.close-animation {
+    opacity: 0;
+    transform: translateX(300px);
+}
+
+.message-box > span {
+    flex: 1;
+    padding: 1rem;
+}
+
+.message-box > button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 0.5rem;
+    cursor: pointer;
+}
