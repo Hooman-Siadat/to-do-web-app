@@ -118,6 +118,19 @@ That’s it. no server needed!
 
 ## 🔄 Changelog
 
+### [v1.0.4] - 2025-05-17
+
+Refactor: Organized style.css into separate modules for better maintainability
+
+- main: all the styles in proper order.
+- base: CSS reset and basic stylings.
+- layout: general layout of the app.
+- form: form section stylings.
+- lists: upcoming, active, completed, expired lists stylings.
+- task: individual tasks stylings.
+- status-bar: tasks status bar and info spans stylings.
+- notifications: pop up on screen notifications stylings.
+
 ### [v1.0.3] - 2025-05-16
 
 Refactor: Organized codebase into separate modules for better maintainability
