@@ -33,7 +33,77 @@
 body {
     font-family: monospace;
     font-size: 0.875rem;
-    background-color: #bbccdd;
+    /* background-color: #bbccdd; */
+    background-color: #000000;
+    background-attachment: fixed;
+    background-image: 
+        /* radial-gradient(circle at 80% 40%, rgba(236, 10, 206, 0.95), transparent 50%), */ radial-gradient(
+            circle 300px at 90% 30%,
+            rgba(203, 5, 243, 0.7) 0%,
+            rgba(203, 5, 243, 0.5) 30%,
+            rgba(203, 5, 243, 0.3) 55%,
+            transparent 100%
+        ),
+        radial-gradient(
+            circle 300px at 80% 20%,
+            rgba(241, 7, 97, 0.7) 0%,
+            rgba(241, 7, 97, 0.5) 20%,
+            rgba(241, 7, 97, 0.3) 55%,
+            transparent 100%
+        ),
+        radial-gradient(
+            circle 200px at 80% 20%,
+            rgba(241, 7, 97, 0.7) 0%,
+            rgba(241, 7, 97, 0.5) 20%,
+            rgba(241, 7, 97, 0.3) 55%,
+            transparent 100%
+        ),
+        radial-gradient(
+            circle 100px at 95% 40%,
+            rgba(240, 140, 10, 0.7) 0%,
+            rgba(240, 140, 10, 0.5) 20%,
+            rgba(240, 140, 10, 0.3) 55%,
+            transparent 100%
+        ),
+        radial-gradient(
+            circle 80px at 95% 40%,
+            rgba(233, 7, 233, 0.7) 0%,
+            rgba(233, 7, 233, 0.5) 20%,
+            rgba(233, 7, 233, 0.3) 55%,
+            transparent 100%
+        ),
+        radial-gradient(
+            circle 500px at 95% 10%,
+            rgba(124, 7, 233, 0.7) 0%,
+            rgba(124, 7, 233, 0.5) 20%,
+            rgba(124, 7, 233, 0.3) 55%,
+            transparent 100%
+        ),
+        radial-gradient(
+            circle 100px at -2% 40%,
+            rgba(240, 10, 190, 0.7) 0%,
+            rgba(240, 10, 190, 0.5) 20%,
+            rgba(240, 10, 190, 0.3) 55%,
+            transparent 100%
+        ),
+        radial-gradient(
+            circle 200px at -2% 0%,
+            rgba(240, 10, 190, 0.7) 0%,
+            rgba(240, 10, 190, 0.5) 20%,
+            rgba(240, 10, 190, 0.3) 55%,
+            transparent 100%
+        ),
+        radial-gradient(
+            circle 200px at 15% 80%,
+            rgba(240, 10, 190, 0.7) 0%,
+            rgba(240, 10, 190, 0.5) 20%,
+            rgba(240, 10, 190, 0.3) 55%,
+            transparent 100%
+        ),
+        linear-gradient(0deg, #000001, #010001);
+    background-blend-mode: screen, lighten, lighten, normal;
+    background-repeat: no-repeat;
+    background-size: cover;
     color: #1f2937;
     padding: 2.5rem 1rem;
 }
@@ -475,7 +545,9 @@ button#form-reset:hover {
     min-height: 60px;
     gap: 0.3rem;
     padding: 0.5rem;
-    background: #323232;
+    background-color: rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(30px); /* Safari support */
+    backdrop-filter: blur(30px); /* the frost */
     color: white;
     border-radius: 0.4rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
