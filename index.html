@@ -64,6 +64,42 @@
                                 <option value="1" selected>Medium</option>
                                 <option value="0">Low</option>
                             </select>
+                            <input class="hidden" type="checkbox" name="repeat" id="repeat" />
+                            <label class="material-icons-round" for="repeat">repeat</label>
+                            <ul class="hidden" id="repeat-options">
+                                <li>
+                                    <input type="checkbox" name="weekly" id="weekly-0" />
+                                    <label for="weekly-0">Mon</label>
+                                    <input type="checkbox" name="weekly" id="weekly-1" />
+                                    <label for="weekly-1">Tue</label>
+                                    <input type="checkbox" name="weekly" id="weekly-2" />
+                                    <label for="weekly-2">Wed</label>
+                                    <input type="checkbox" name="weekly" id="weekly-3" />
+                                    <label for="weekly-3">Thu</label>
+                                    <input type="checkbox" name="weekly" id="weekly-4" />
+                                    <label for="weekly-4">Fri</label>
+                                    <input type="checkbox" name="weekly" id="weekly-5" />
+                                    <label for="weekly-5">Sat</label>
+                                    <input type="checkbox" name="weekly" id="weekly-6" />
+                                    <label for="weekly-6">Sun</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="monthly" id="monthly-0" />
+                                    <label for="monthly-0">Beginning of the month</label>
+                                    <input type="checkbox" name="monthly" id="monthly-1" />
+                                    <label for="monthly-1">End of the month</label>
+                                    <input type="checkbox" name="monthly" id="monthly-2" />
+                                    <label for="monthly-2">Same day of the month</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="annually" id="annually-0" />
+                                    <label for="annually-0">Beginning of the year</label>
+                                    <input type="checkbox" name="annually" id="annually-1" />
+                                    <label for="annually-1">End of the year</label>
+                                    <input type="checkbox" name="annually" id="annually-2" />
+                                    <label for="annually-2">Same day of the year</label>
+                                </li>
+                            </ul>
                             <button id="form-reset" type="reset">Clear</button>
                             <button type="submit" id="add-task-button">Add Task</button>
                         </li>

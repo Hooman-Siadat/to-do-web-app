@@ -140,6 +140,10 @@ That’s it. no server needed!
 
 ### [v1.0.4] - 2025-05-17
 
+Updated UI to support repeat tasks.
+
+### [v1.0.4] - 2025-05-17
+
 Refactor: Organized style.css into separate modules for better maintainability
 
 - main: all the styles in proper order.
