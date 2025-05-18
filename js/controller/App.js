@@ -104,8 +104,6 @@ export default class App {
             return msLeft;
         })();
 
-        console.log(this.EXPIRY_DELAY);
-
         // Helper classes
         this.taskManager = new TaskManager(this.elements.form, this.EXPIRY_DELAY);
         this.notificationServices = new NotificationServices(this.taskManager, this.EXPIRY_DELAY);
