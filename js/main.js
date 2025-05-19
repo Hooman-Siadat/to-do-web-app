@@ -17,6 +17,16 @@ document.addEventListener("DOMContentLoaded", () => {
             priority: document.querySelector("#priority"),
             notification: document.querySelector("#notification"), //get notification?
             notificationOffset: document.querySelector("#notification-offset"), // notification offset
+            repeat: {
+                button: document.getElementById("repeat"),
+                options: document.getElementById("repeat-options"),
+                weeklyContainer: document.getElementById("weekly-container"),
+                monthlyContainer: document.getElementById("monthly-container"),
+                annuallyContainer: document.getElementById("annually-container"),
+                sameDayAnnually: document.getElementById("same-day-annually"),
+                submitButton: document.getElementById("submit-repeat"),
+                resetButton: document.getElementById("reset-repeat"),
+            },
         },
         lists: {
             upcoming: document.querySelector("#upcoming-list"),

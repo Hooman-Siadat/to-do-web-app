@@ -138,6 +138,10 @@ That’s it. no server needed!
 
 ## 🔄 Changelog
 
+### [v1.0.4] - 2025-05-18
+
+Updated repeat tasks to support more options.
+
 ### [v1.0.4] - 2025-05-17
 
 Updated UI to support repeat tasks.

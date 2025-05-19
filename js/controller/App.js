@@ -163,6 +163,51 @@ export default class App {
             this.resetInputFields();
         });
 
+        // Handle repeat exclusive selection between weekly, monthly, annually
+        this.elements.form.repeat.options.addEventListener("change", (e) => {
+            if (e.target.tagName !== "INPUT") return;
+
+            function resetRepeatGroup(container) {
+                container.querySelectorAll("input").forEach((input) => {
+                    input.checked = false;
+                });
+            }
+
+            const name = e.target.name;
+            if (name === "weekly") {
+                resetRepeatGroup(this.elements.form.repeat.monthlyContainer);
+                resetRepeatGroup(this.elements.form.repeat.annuallyContainer);
+            } else if (name === "monthly") {
+                resetRepeatGroup(this.elements.form.repeat.weeklyContainer);
+                resetRepeatGroup(this.elements.form.repeat.annuallyContainer);
+            } else if (name === "annually") {
+                resetRepeatGroup(this.elements.form.repeat.weeklyContainer);
+                resetRepeatGroup(this.elements.form.repeat.monthlyContainer);
+            }
+        });
+
+        // close repeat options menu
+        this.elements.form.repeat.submitButton.addEventListener("click", () => {
+            this.elements.form.repeat.button.classList.toggle("view");
+            this.repeatTaskButtonIndicator();
+        });
+
+        // view/hide options menu
+        this.elements.form.repeat.button.addEventListener("click", () => {
+            elements.form.repeat.button.classList.toggle("view");
+            this.repeatTaskButtonIndicator();
+        });
+
+        // reset options menu
+        this.elements.form.repeat.resetButton.addEventListener("click", () => {
+            const repeatOptionsElements = document.querySelectorAll(
+                `#${this.elements.form.repeat.options.id} input`
+            );
+            for (let element of repeatOptionsElements) {
+                element.checked = false;
+            }
+        });
+
         // render all tasks
         this.renderer.renderTasks();
 
@@ -185,5 +230,20 @@ export default class App {
         this.elements.form.notificationOffset.value = 0;
         this.elements.form.notificationOffset.disabled = true;
         this.elements.form.priority.value = 1;
+    }
+
+    // change the repeat button style if any repeat options selected
+    repeatTaskButtonIndicator() {
+        const selectedOptions = document.querySelectorAll(
+            `#${this.elements.form.repeat.options.id} input:checked`
+        );
+
+        // if items selected
+        if (selectedOptions.length > 0) {
+            this.elements.form.repeat.button.classList.add("enabled-options");
+        } else {
+            console.log(selectedOptions.length);
+            this.elements.form.repeat.button.classList.remove("enabled-options");
+        }
     }
 }

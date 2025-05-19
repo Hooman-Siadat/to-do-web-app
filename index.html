@@ -64,40 +64,43 @@
                                 <option value="1" selected>Medium</option>
                                 <option value="0">Low</option>
                             </select>
-                            <input class="hidden" type="checkbox" name="repeat" id="repeat" />
-                            <label class="material-icons-round" for="repeat">repeat</label>
+                            <span class="material-icons-round" id="repeat">repeat</span>
                             <ul class="hidden" id="repeat-options">
-                                <li>
-                                    <input type="checkbox" name="weekly" id="weekly-0" />
-                                    <label for="weekly-0">Mon</label>
-                                    <input type="checkbox" name="weekly" id="weekly-1" />
-                                    <label for="weekly-1">Tue</label>
-                                    <input type="checkbox" name="weekly" id="weekly-2" />
-                                    <label for="weekly-2">Wed</label>
-                                    <input type="checkbox" name="weekly" id="weekly-3" />
-                                    <label for="weekly-3">Thu</label>
-                                    <input type="checkbox" name="weekly" id="weekly-4" />
-                                    <label for="weekly-4">Fri</label>
-                                    <input type="checkbox" name="weekly" id="weekly-5" />
-                                    <label for="weekly-5">Sat</label>
-                                    <input type="checkbox" name="weekly" id="weekly-6" />
-                                    <label for="weekly-6">Sun</label>
+                                <li id="weekly-container">
+                                    <input type="checkbox" name="weekly" id="monday" value="0" />
+                                    <label for="monday">Mon</label>
+                                    <input type="checkbox" name="weekly" id="tuesday" value="1" />
+                                    <label for="tuesday">Tue</label>
+                                    <input type="checkbox" name="weekly" id="wednesday" value="2" />
+                                    <label for="wednesday">Wed</label>
+                                    <input type="checkbox" name="weekly" id="thursday" value="3" />
+                                    <label for="thursday">Thu</label>
+                                    <input type="checkbox" name="weekly" id="friday" value="4" />
+                                    <label for="friday">Fri</label>
+                                    <input type="checkbox" name="weekly" id="saturday" value="5" />
+                                    <label for="saturday">Sat</label>
+                                    <input type="checkbox" name="weekly" id="sunday" value="6" />
+                                    <label for="sunday">Sun</label>
                                 </li>
-                                <li>
-                                    <input type="checkbox" name="monthly" id="monthly-0" />
-                                    <label for="monthly-0">Beginning of the month</label>
-                                    <input type="checkbox" name="monthly" id="monthly-1" />
-                                    <label for="monthly-1">End of the month</label>
-                                    <input type="checkbox" name="monthly" id="monthly-2" />
-                                    <label for="monthly-2">Same day of the month</label>
+                                <li id="monthly-container">
+                                    <input type="radio" name="monthly" id="start-of-month" value="0" />
+                                    <label for="start-of-month">Start of month</label>
+                                    <input type="radio" name="monthly" id="end-of-month" value="1" />
+                                    <label for="end-of-month">End of month</label>
+                                    <input type="radio" name="monthly" id="same-day-monthly" value="2" />
+                                    <label for="same-day-monthly">Same day monthly</label>
                                 </li>
-                                <li>
-                                    <input type="checkbox" name="annually" id="annually-0" />
-                                    <label for="annually-0">Beginning of the year</label>
-                                    <input type="checkbox" name="annually" id="annually-1" />
-                                    <label for="annually-1">End of the year</label>
-                                    <input type="checkbox" name="annually" id="annually-2" />
-                                    <label for="annually-2">Same day of the year</label>
+                                <li id="annually-container">
+                                    <input type="checkbox" name="annually" id="same-day-annually" />
+                                    <label for="same-day-annually">Same day annually</label>
+                                </li>
+                                <li id="repeat-form-buttons">
+                                    <button type="button" class="material-icons-round" id="reset-repeat">
+                                        delete
+                                    </button>
+                                    <button type="button" class="material-icons-round" id="submit-repeat">
+                                        done
+                                    </button>
                                 </li>
                             </ul>
                             <button id="form-reset" type="reset">Clear</button>
